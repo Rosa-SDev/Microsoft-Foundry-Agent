@@ -1,10 +1,17 @@
 # Before running the sample:
-#    pip install azure-ai-projects>=2.1.0
+#    pip install azure-ai-projects>=2.1.0 python-dotenv
 
+import os
+from dotenv import load_dotenv
 from azure.identity import DefaultAzureCredential
 from azure.ai.projects import AIProjectClient
 
-endpoint = "https://rosa-foundry-ai.services.ai.azure.com/api/projects/agentai"
+load_dotenv()
+
+endpoint = os.getenv("AGENT_ENDPOINT")
+
+if not endpoint:
+    raise ValueError("AGENT_ENDPOINT not found in .env file")
 
 project_client = AIProjectClient(
     endpoint=endpoint,
